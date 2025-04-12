@@ -18,3 +18,4 @@ plugins {
 
 rootProject.name = "MediScan"
 include("api-gateway")
+include("auth-service")
