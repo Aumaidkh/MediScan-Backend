@@ -17,6 +17,11 @@ class JwtAuthFilter(
         response: jakarta.servlet.http.HttpServletResponse,
         filterChain: jakarta.servlet.FilterChain
     ) {
+        // Explicitly skip JWT validation for Swagger paths
+        if (isSwaggerRequest(request)) {
+            filterChain.doFilter(request, response)
+            return
+        }
         request
             .getAuthorizationHeader()?.let { token ->
                 if (tokenService.validateToken(
@@ -35,5 +40,15 @@ class JwtAuthFilter(
     private fun HttpServletRequest.getAuthorizationHeader(): String? {
        val header = getHeader("Authorization")
        return header?.substringAfter("Bearer ")
+    }
+
+    private fun isSwaggerRequest(request: HttpServletRequest): Boolean {
+        val path = request.requestURI.lowercase() // Use requestURI to account for context paths
+        return path.contains("/swagger-ui") ||
+                path.contains("/v3/api-docs") ||
+                path.contains("/swagger-resources") ||
+                path.contains("/configuration/ui") ||
+                path.contains("/configuration/security") ||
+                path.contains("/webjars")
     }
 }

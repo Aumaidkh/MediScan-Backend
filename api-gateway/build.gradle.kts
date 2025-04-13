@@ -21,6 +21,8 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
+
     implementation(project(":security"))
     implementation(project(":common"))
     implementation(project(":auth-service"))

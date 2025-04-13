@@ -24,6 +24,8 @@ class SecurityConfig(
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { auth ->
                 auth
+                    .requestMatchers("/", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/configuration/ui", "/configuration/security", "/webjars/**")
+                    .permitAll()
                     .requestMatchers("$FULL_API_PATH${AuthResource.ROOT}/**")
                     .permitAll()
                     .anyRequest()
