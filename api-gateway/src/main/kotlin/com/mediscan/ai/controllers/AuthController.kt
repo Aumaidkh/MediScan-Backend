@@ -16,7 +16,6 @@ private const val REFRESH_ENDPOINT = "/refresh"
     resource = "/auth"
 )
 class AuthController(
-    private val hashingService: HashingService,
     private val authService: AuthService
 ) {
 
@@ -53,10 +52,10 @@ class AuthController(
     @PostMapping(REGISTER_ENDPOINT)
     fun register(
         @RequestBody request: RegisterRequest
-    ): ResponseEntity<RegisterResponse> {
-        authService.saveUser(request.email, request.password)
-        val hashedPassword = hashingService.encode(request.password)
-        return ResponseEntity.ok(RegisterResponse(hashedPassword))
+    ): RegisterResponse {
+        return with(authService.register(request.email, request.password)){
+            RegisterResponse("User registered successfully")
+        }
     }
 
 

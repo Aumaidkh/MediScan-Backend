@@ -4,7 +4,7 @@ import com.hopcape.auth.domain.entities.User
 
 interface AuthService {
 
-    fun saveUser(email: String, password: String)
+    fun register(email: String, password: String): User
 
     fun findUserByEmail(email: String): User?
 }
