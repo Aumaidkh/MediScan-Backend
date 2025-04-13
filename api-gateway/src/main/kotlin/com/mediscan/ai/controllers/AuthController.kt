@@ -67,12 +67,7 @@ class AuthController(
     @PostMapping(REFRESH_ENDPOINT)
     fun refresh(
         @RequestBody request: RefreshRequest
-    ): ResponseEntity<RefreshResponse> {
-        return ResponseEntity.ok(
-            RefreshResponse(
-                newAccessToken = "newAccessToken",
-                rewRefreshToken = "rewRefreshToken"
-            )
-        )
+    ): TokenPair {
+        return authService.refreshToken(request.refreshToken)
     }
 }

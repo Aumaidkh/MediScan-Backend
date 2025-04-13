@@ -10,4 +10,6 @@ interface AuthService {
     fun findUserByEmail(email: String): User?
 
     fun login(email: String, password: String): TokenPair
+
+    fun refreshToken(refreshToken: String): TokenPair
 }
