@@ -18,7 +18,11 @@ object AuthResource {
 object MedicineResource {
     const val ROOT = "/medicines"
     const val IDENTIFY_ENDPOINT = "/identify"
+    const val UPLOAD_MEDICINE_IMAGE = "/upload"
 }
+
+// Request Utils
+const val MULTIPART_FORM_DATA = "multipart/form-data"
 
 
 
