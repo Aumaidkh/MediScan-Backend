@@ -1,9 +1,11 @@
 package com.hopcape.security.hashing
 
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Component
 
 @Component
+@Qualifier("passwordHasher")
 class BCryptHashingService : HashingService {
 
     private val bcrypt: BCryptPasswordEncoder = BCryptPasswordEncoder()

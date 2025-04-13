@@ -1,4 +1,4 @@
-package com.hopcape.auth.domain.entities
+package com.hopcape.auth.database.entities
 
 data class TokenPair(
     val accessToken: String,

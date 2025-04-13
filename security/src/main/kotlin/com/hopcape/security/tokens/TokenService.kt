@@ -5,11 +5,11 @@ import kotlin.time.toDuration
 
 interface TokenService {
 
-    fun validateToken(type: TokenType,token: String): Boolean
+    fun validateToken(type: TokenType, token: String): Boolean
 
     fun getUserIdFromToken(token: String): String
 
-    fun generateToken(type: TokenType,userId: String): String
+    fun generateToken(type: TokenType, userId: String): String
 
     enum class TokenType(val type: String,val validity: Long){
         ACCESS(

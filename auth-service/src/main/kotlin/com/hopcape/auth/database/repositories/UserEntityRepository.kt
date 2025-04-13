@@ -1,6 +1,6 @@
-package com.hopcape.auth.domain.repositories
+package com.hopcape.auth.database.repositories
 
-import com.hopcape.auth.domain.entities.User
+import com.hopcape.auth.database.entities.User
 import org.bson.types.ObjectId
 import org.springframework.data.mongodb.repository.MongoRepository
 

@@ -1,7 +1,7 @@
 package com.mediscan.ai.controllers
 
 import com.hopcape.auth.application.AuthService
-import com.hopcape.auth.domain.entities.TokenPair
+import com.hopcape.auth.database.entities.TokenPair
 import com.hopcape.security.hashing.HashingService
 import com.mediscan.ai.utils.VersionedRestControllerWithRequestMapping
 import org.springframework.http.ResponseEntity

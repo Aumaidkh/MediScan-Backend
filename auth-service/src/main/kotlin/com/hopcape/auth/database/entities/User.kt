@@ -1,4 +1,4 @@
-package com.hopcape.auth.domain.entities
+package com.hopcape.auth.database.entities
 
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id

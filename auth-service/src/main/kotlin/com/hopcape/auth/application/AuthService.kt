@@ -1,7 +1,7 @@
 package com.hopcape.auth.application
 
-import com.hopcape.auth.domain.entities.TokenPair
-import com.hopcape.auth.domain.entities.User
+import com.hopcape.auth.database.entities.TokenPair
+import com.hopcape.auth.database.entities.User
 
 interface AuthService {
 
