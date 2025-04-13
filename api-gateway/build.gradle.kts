@@ -19,6 +19,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+
     implementation(project(":security"))
     implementation(project(":common"))
     implementation(project(":auth-service"))
