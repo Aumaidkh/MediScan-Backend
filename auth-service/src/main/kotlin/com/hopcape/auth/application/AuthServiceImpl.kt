@@ -11,7 +11,6 @@ import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import java.time.Instant
 
 @Service
@@ -30,7 +29,7 @@ class AuthServiceImpl(
         return userRepository.save(
             User(
                 email = email,
-                password = passwordHasher.encode(password)
+                password = passwordHasher.hash(password)
             )
         )
     }
@@ -42,7 +41,7 @@ class AuthServiceImpl(
     override fun login(email: String, password: String): TokenPair {
         val user = userRepository.findByEmail(email) ?: throw BadCredentialsException("Invalid credentials")
 
-        if (!passwordHasher.matches(password, user.password)) throw BadCredentialsException("Invalid credentials")
+        if (!passwordHasher.verify(password, user.password)) throw BadCredentialsException("Invalid credentials")
 
         val accessToken = tokenService.generateToken(
             type = TokenService.TokenType.ACCESS,
@@ -63,7 +62,7 @@ class AuthServiceImpl(
     }
 
     private fun TokenPair.storeRefreshToken(userId: ObjectId){
-        val hashedToken = tokenHasher.encode(refreshToken)
+        val hashedToken = tokenHasher.hash(refreshToken)
         val expiresAt = Instant.now().plusMillis(TokenService.TokenType.REFRESH.validity)
         tokenRepository.save(
             RefreshToken(

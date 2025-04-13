@@ -10,12 +10,12 @@ import java.util.Base64
 class Sha256HashingService: HashingService {
     private val digest by lazy { MessageDigest.getInstance("SHA-256") }
 
-    override fun encode(raw: String): String {
+    override fun hash(raw: String): String {
         val hashBytes = digest.digest(raw.encodeToByteArray())
         return Base64.getEncoder().encodeToString(hashBytes)
     }
 
-    override fun matches(raw: String, hashed: String): Boolean {
-        return encode(raw) == hashed
+    override fun verify(raw: String, hashed: String): Boolean {
+        return hash(raw) == hashed
     }
 }

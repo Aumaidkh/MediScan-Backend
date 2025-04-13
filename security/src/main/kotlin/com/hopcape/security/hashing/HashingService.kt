@@ -2,7 +2,7 @@ package com.hopcape.security.hashing
 
 interface HashingService {
 
-    fun encode(raw: String): String
+    fun hash(raw: String): String
 
-    fun matches(raw: String, hashed: String): Boolean
+    fun verify(raw: String, hashed: String): Boolean
 }

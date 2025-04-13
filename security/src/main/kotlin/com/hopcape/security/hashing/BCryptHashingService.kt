@@ -10,11 +10,11 @@ class BCryptHashingService : HashingService {
 
     private val bcrypt: BCryptPasswordEncoder = BCryptPasswordEncoder()
 
-    override fun encode(raw: String): String {
+    override fun hash(raw: String): String {
         return bcrypt.encode(raw)
     }
 
-    override fun matches(raw: String, hashed: String): Boolean {
+    override fun verify(raw: String, hashed: String): Boolean {
         return bcrypt.matches(raw, hashed)
     }
 }
