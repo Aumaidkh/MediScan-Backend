@@ -27,7 +27,6 @@ class AuthServiceImpl(
     private val tokenRepository: RefreshTokenRepository
 ): AuthService {
 
-
     override fun register(email: String, password: String): User {
         return userRepository.save(
             User(
