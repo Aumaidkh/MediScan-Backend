@@ -1,11 +1,12 @@
 package com.mediscan.ai.utils
 
+import com.hopcape.common.api.API_PATH
+import com.hopcape.common.api.VERSION_PREFIX
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-private const val VERSION_PATH = "/v{version}"
+private const val VERSION_PATH = "$VERSION_PREFIX{version}"
 private const val RESOURCE_PATH = "/{resource}"
-private const val API_PATH = "/api"
 
 
 @Target(AnnotationTarget.CLASS)

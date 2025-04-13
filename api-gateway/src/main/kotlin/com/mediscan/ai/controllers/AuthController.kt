@@ -2,19 +2,15 @@ package com.mediscan.ai.controllers
 
 import com.hopcape.auth.application.AuthService
 import com.hopcape.auth.database.entities.TokenPair
-import com.hopcape.security.hashing.HashingService
+import com.hopcape.common.api.AuthResource
 import com.mediscan.ai.utils.VersionedRestControllerWithRequestMapping
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 
-private const val LOGIN_ENDPOINT = "/login"
-private const val REGISTER_ENDPOINT = "/register"
-private const val REFRESH_ENDPOINT = "/refresh"
 
 @VersionedRestControllerWithRequestMapping(
     version = 1,
-    resource = "/auth"
+    resource = AuthResource.ROOT,
 )
 class AuthController(
     private val authService: AuthService
@@ -30,7 +26,7 @@ class AuthController(
         val refreshToken: String
     )
 
-    @PostMapping(LOGIN_ENDPOINT)
+    @PostMapping(AuthResource.LOGIN_ENDPOINT)
     fun login(
         @RequestBody request: LoginRequest
     ): TokenPair {
@@ -45,7 +41,7 @@ class AuthController(
     data class RegisterResponse(
         val message: String
     )
-    @PostMapping(REGISTER_ENDPOINT)
+    @PostMapping(AuthResource.REGISTER_ENDPOINT)
     fun register(
         @RequestBody request: RegisterRequest
     ): RegisterResponse {
@@ -64,7 +60,7 @@ class AuthController(
         val rewRefreshToken: String
     )
 
-    @PostMapping(REFRESH_ENDPOINT)
+    @PostMapping(AuthResource.REFRESH_TOKEN_ENDPOINT)
     fun refresh(
         @RequestBody request: RefreshRequest
     ): TokenPair {
