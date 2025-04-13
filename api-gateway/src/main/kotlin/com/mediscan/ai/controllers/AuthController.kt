@@ -1,6 +1,7 @@
 package com.mediscan.ai.controllers
 
 import com.hopcape.auth.application.AuthService
+import com.hopcape.auth.domain.entities.TokenPair
 import com.hopcape.security.hashing.HashingService
 import com.mediscan.ai.utils.VersionedRestControllerWithRequestMapping
 import org.springframework.http.ResponseEntity
@@ -32,13 +33,8 @@ class AuthController(
     @PostMapping(LOGIN_ENDPOINT)
     fun login(
         @RequestBody request: LoginRequest
-    ): ResponseEntity<LoginResponse> {
-        return ResponseEntity.ok(
-            LoginResponse(
-                accessToken = "accessToken",
-                refreshToken = "refreshToken"
-            )
-        )
+    ): TokenPair {
+        return authService.login(request.email, request.password)
     }
 
 
