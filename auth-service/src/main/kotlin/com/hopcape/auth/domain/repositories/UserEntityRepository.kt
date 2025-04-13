@@ -1,6 +1,6 @@
-package com.medscan.ai.domain.repositories
+package com.hopcape.auth.domain.repositories
 
-import com.medscan.ai.domain.entities.User
+import com.hopcape.auth.domain.entities.User
 import org.bson.types.ObjectId
 import org.springframework.data.mongodb.repository.MongoRepository
 

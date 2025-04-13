@@ -1,6 +1,6 @@
-package com.medscan.ai.application
+package com.hopcape.auth.application
 
-import com.medscan.ai.domain.entities.User
+import com.hopcape.auth.domain.entities.User
 
 interface AuthService {
 

@@ -5,7 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
 }
 
-group = "com.mediscan.ai"
+group = "com.hopcape.auth"
 version = "1.0.0-APLHA01"
 
 repositories {

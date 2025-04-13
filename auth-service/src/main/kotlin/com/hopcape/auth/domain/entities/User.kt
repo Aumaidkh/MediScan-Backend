@@ -1,4 +1,4 @@
-package com.medscan.ai.domain.entities
+package com.hopcape.auth.domain.entities
 
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id

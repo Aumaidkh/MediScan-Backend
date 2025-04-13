@@ -1,5 +1,6 @@
 package com.mediscan.ai.controllers
 
+import com.hopcape.auth.application.AuthService
 import com.hopcape.security.hashing.HashingService
 import com.mediscan.ai.utils.VersionedRestControllerWithRequestMapping
 import org.springframework.http.ResponseEntity
@@ -15,7 +16,8 @@ private const val REFRESH_ENDPOINT = "/refresh"
     resource = "/auth"
 )
 class AuthController(
-    private val hashingService: HashingService
+    private val hashingService: HashingService,
+    private val authService: AuthService
 ) {
 
     data class LoginRequest(
@@ -52,6 +54,7 @@ class AuthController(
     fun register(
         @RequestBody request: RegisterRequest
     ): ResponseEntity<RegisterResponse> {
+        authService.saveUser(request.email, request.password)
         val hashedPassword = hashingService.encode(request.password)
         return ResponseEntity.ok(RegisterResponse(hashedPassword))
     }
