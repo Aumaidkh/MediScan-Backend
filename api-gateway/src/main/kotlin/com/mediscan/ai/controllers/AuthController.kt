@@ -6,6 +6,9 @@ import com.hopcape.common.api.AuthResource
 import com.mediscan.ai.domain.login.LoginRequest
 import com.mediscan.ai.domain.login.LoginRequestHandler
 import com.mediscan.ai.domain.login.LoginResponse
+import com.mediscan.ai.domain.register.RegisterRequest
+import com.mediscan.ai.domain.register.RegisterResponse
+import com.mediscan.ai.domain.register.RegisterResponseHandler
 import com.mediscan.ai.utils.VersionedRestControllerWithRequestMapping
 import jakarta.validation.Valid
 import jakarta.validation.constraints.Email
@@ -25,7 +28,9 @@ import org.springframework.web.bind.annotation.RequestBody
 class AuthController(
     private val authService: AuthService,
     @Qualifier("loginRequestHandler")
-    private val loginRequestHandler: LoginRequestHandler
+    private val loginRequestHandler: LoginRequestHandler,
+    @Qualifier("registerRequestHandler")
+    private val registerRequestHandler: RegisterResponseHandler
 ) {
 
     @PostMapping(AuthResource.LOGIN_ENDPOINT)
@@ -41,29 +46,11 @@ class AuthController(
     }
 
 
-    data class RegisterRequest(
-        @field:Email(
-            regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
-            message = "Invalid email"
-        )
-        val email: String,
-        @field:Pattern(
-            regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$",
-            message = "Password must be at least 8 characters long, contain at least one digit, one lowercase letter, one uppercase letter, one special character (@#$%^&+=), and must not contain spaces."
-        )
-        val password: String
-    )
-
-    data class RegisterResponse(
-        val message: String
-    )
     @PostMapping(AuthResource.REGISTER_ENDPOINT)
     fun register(
         @Valid @RequestBody request: RegisterRequest
     ): RegisterResponse {
-        return with(authService.register(request.email, request.password)){
-            RegisterResponse("User registered successfully")
-        }
+        return registerRequestHandler.handleRequest(request)
     }
 
 
