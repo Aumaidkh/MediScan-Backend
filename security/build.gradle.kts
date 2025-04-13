@@ -5,8 +5,9 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
 }
 
-group = "com.mediscan.ai"
-version = "1.0.0-APLHA01"
+group = "com.hopcape.security"
+version = "1.0.0-ALPHA01"
+
 
 repositories {
     mavenCentral()
@@ -15,11 +16,6 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
-
-    implementation(project(":security"))
 }
 
 tasks.test {

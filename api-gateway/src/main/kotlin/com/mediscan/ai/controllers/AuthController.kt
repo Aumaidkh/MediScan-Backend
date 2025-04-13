@@ -1,5 +1,6 @@
 package com.mediscan.ai.controllers
 
+import com.hopcape.security.hashing.HashingService
 import com.mediscan.ai.utils.VersionedRestControllerWithRequestMapping
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -13,7 +14,9 @@ private const val REFRESH_ENDPOINT = "/refresh"
     version = 1,
     resource = "/auth"
 )
-class AuthController {
+class AuthController(
+    private val hashingService: HashingService
+) {
 
     data class LoginRequest(
         val email: String,
@@ -49,7 +52,8 @@ class AuthController {
     fun register(
         @RequestBody request: RegisterRequest
     ): ResponseEntity<RegisterResponse> {
-        return ResponseEntity.ok(RegisterResponse("User registered successfully"))
+        val hashedPassword = hashingService.encode(request.password)
+        return ResponseEntity.ok(RegisterResponse(hashedPassword))
     }
 
 
