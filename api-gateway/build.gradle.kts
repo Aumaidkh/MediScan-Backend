@@ -26,6 +26,7 @@ dependencies {
     implementation(project(":security"))
     implementation(project(":common"))
     implementation(project(":auth-service"))
+    implementation(project(":image-recognition"))
 }
 
 tasks.test {
