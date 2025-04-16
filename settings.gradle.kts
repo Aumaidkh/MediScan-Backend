@@ -22,3 +22,5 @@ include("auth-service")
 include("security")
 include("common")
 include("image-recognition")
+include("clustering_algorithm")
+
