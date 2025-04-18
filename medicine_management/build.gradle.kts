@@ -14,6 +14,9 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
 }
 
 tasks.test {

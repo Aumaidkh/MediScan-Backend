@@ -1,10 +1,15 @@
 package com.hopcape.image.recogntion
 
+import com.hopcape.clustering.MedicineIdentifier
+import com.hopcape.medicine.management.models.Label
+import com.hopcape.medicine.management.repository.TrainingDataRepository
 import org.springframework.stereotype.Service
 import software.amazon.awssdk.core.SdkBytes
 import software.amazon.awssdk.services.rekognition.RekognitionClient
 import software.amazon.awssdk.services.rekognition.model.DetectTextRequest
 import software.amazon.awssdk.services.rekognition.model.Image
+import software.amazon.awssdk.services.rekognition.model.TextDetection
+import software.amazon.awssdk.services.rekognition.model.TextTypes
 
 /**
  * Service implementation for image recognition using AWS Rekognition.
@@ -16,9 +21,10 @@ import software.amazon.awssdk.services.rekognition.model.Image
  * @property client An instance of RekognitionClient to communicate with AWS Rekognition.
  */
 @Service
-internal class AwsImageRekognitionService(
-    private val client: RekognitionClient
-): ImageRecognitionService {
+class AwsImageRekognitionService(
+    private val client: RekognitionClient,
+    private val identifier: MedicineIdentifier
+) : ImageRecognitionService {
     /**
      * Recognizes and extracts text from the given image using AWS Rekognition.
      *
@@ -40,8 +46,23 @@ internal class AwsImageRekognitionService(
         // Call Amazon Rekognition to detect text in the image
         val detectTextResult = client.detectText(detectTextRequest)
         val detectedTexts = detectTextResult.textDetections()
-
+        val labels = extractTop5ConfidentLabels(detectedTexts)
         // Extract and return the recognized text
-        return detectedTexts.joinToString(", ") { it.detectedText() }
+        return identifier.identify(labels) ?: "Unknown Medicine"
+    }
+
+    fun extractTop5ConfidentLabels(detectedTexts: List<TextDetection>): List<String> {
+        return detectedTexts
+            .filter { it.type() == TextTypes.WORD } // Only consider words (optional, remove if you want all types)
+            .mapNotNull { detection ->
+                val text = detection.detectedText()?.replace(Regex("[^a-zA-Z0-9\\-]"), "")?.uppercase()
+                val confidence = detection.confidence() // Assuming `confidence()` returns a numeric value
+                if (!text.isNullOrBlank()) {
+                    text to confidence
+                } else null
+            }
+            .sortedByDescending { it.second } // Sort by confidence in descending order
+            .take(5) // Take the top 5
+            .map { it.first } // Extract only the text part
     }
 }
