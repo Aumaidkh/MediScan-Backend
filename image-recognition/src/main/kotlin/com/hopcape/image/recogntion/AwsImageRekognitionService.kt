@@ -1,8 +1,6 @@
 package com.hopcape.image.recogntion
 
 import com.hopcape.clustering.MedicineIdentifier
-import com.hopcape.medicine.management.models.Label
-import com.hopcape.medicine.management.repository.TrainingDataRepository
 import org.springframework.stereotype.Service
 import software.amazon.awssdk.core.SdkBytes
 import software.amazon.awssdk.services.rekognition.RekognitionClient
