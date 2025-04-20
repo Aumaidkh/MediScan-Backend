@@ -23,6 +23,8 @@ dependencies {
     implementation(platform("software.amazon.awssdk:bom:2.20.0"))
     implementation("software.amazon.awssdk:rekognition")
 
+    implementation("com.google.cloud:google-cloud-vision:3.17.0")
+
     implementation(project(":medicine_management"))
 
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")

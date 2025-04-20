@@ -29,6 +29,7 @@ dependencies {
     implementation(project(":image-recognition"))
     implementation(project(":medicine_management"))
     implementation(project(":clustering_algorithm"))
+    implementation(project(":logging"))
 }
 
 tasks.test {

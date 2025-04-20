@@ -16,6 +16,6 @@ data class Medicine(
     val manufacturer_name: String?,
     val type: String?,
     val pack_size_label: String?,
-    val short_composition_1: String?,
-    val short_composition_2: String?
+    val short_composition1: String?,
+    val short_composition2: String?
 )

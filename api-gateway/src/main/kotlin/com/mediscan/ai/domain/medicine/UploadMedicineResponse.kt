@@ -3,5 +3,9 @@ package com.mediscan.ai.domain.medicine
 import com.mediscan.ai.domain.RequestHandler
 
 data class UploadMedicineResponse(
-    val message: String
+    val message: String,
+    val name: String,
+    val details: String,
+    val usage: String,
+    val dosage: String
 ): RequestHandler.Response

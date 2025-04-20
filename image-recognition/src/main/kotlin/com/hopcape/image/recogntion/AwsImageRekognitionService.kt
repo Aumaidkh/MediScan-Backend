@@ -18,7 +18,7 @@ import software.amazon.awssdk.services.rekognition.model.TextTypes
  *
  * @property client An instance of RekognitionClient to communicate with AWS Rekognition.
  */
-@Service
+//@Service
 class AwsImageRekognitionService(
     private val client: RekognitionClient,
     private val identifier: MedicineIdentifier
@@ -51,9 +51,10 @@ class AwsImageRekognitionService(
 
     fun extractTop5ConfidentLabels(detectedTexts: List<TextDetection>): List<String> {
         return detectedTexts
+            .asSequence()
             .filter { it.type() == TextTypes.WORD } // Only consider words (optional, remove if you want all types)
             .mapNotNull { detection ->
-                val text = detection.detectedText()?.replace(Regex("[^a-zA-Z0-9\\-]"), "")?.uppercase()
+                val text = detection.detectedText() //?.replace(Regex("[^a-zA-Z0-9\\-]"), "")?.uppercase()
                 val confidence = detection.confidence() // Assuming `confidence()` returns a numeric value
                 if (!text.isNullOrBlank()) {
                     text to confidence
@@ -61,6 +62,7 @@ class AwsImageRekognitionService(
             }
             .sortedByDescending { it.second } // Sort by confidence in descending order
             .take(5) // Take the top 5
-            .map { it.first } // Extract only the text part
+            .map { it.first }
+            .toList() // Extract only the text part
     }
 }

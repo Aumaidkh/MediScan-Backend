@@ -43,3 +43,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Image-Recognition ###
+/image-recognition/src/main/resources/keys/

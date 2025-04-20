@@ -16,9 +16,16 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     implementation("org.apache.commons:commons-math3:3.6.1")
+
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
+    implementation("me.xdrop:fuzzywuzzy:1.4.0")
+
     implementation(project(":medicine_management"))
+    implementation(project(":logging"))
 }
 
 tasks.test {

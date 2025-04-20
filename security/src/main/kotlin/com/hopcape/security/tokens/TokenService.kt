@@ -14,7 +14,7 @@ interface TokenService {
     enum class TokenType(val type: String,val validity: Long){
         ACCESS(
             type = "access",
-            validity = 15.toDuration(DurationUnit.MINUTES).inWholeMilliseconds
+            validity = 40.toDuration(DurationUnit.MINUTES).inWholeMilliseconds
         ),
         REFRESH(
             type = "refresh",
