@@ -1,8 +1,11 @@
 package com.hopcape.clustering.fake
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.hopcape.cache.api.Cache
 import com.hopcape.clustering.api.MedicineDetailsPredictor
 import com.hopcape.clustering.api.PredictionResult
+import com.hopcape.logging.api.Log
+import com.hopcape.logging.api.Logger
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 
@@ -72,7 +75,9 @@ const val FAKE_PREDICTOR = "FakeMedicinePredictorService"
 @Service
 @Qualifier(FAKE_PREDICTOR)
 internal class FakeMedicinePredictorService(
-    private val objectMapper: ObjectMapper
+    private val objectMapper: ObjectMapper,
+    private val logger: Logger,
+    private val cache: Cache
 ) : MedicineDetailsPredictor {
 
     /**
@@ -102,7 +107,15 @@ internal class FakeMedicinePredictorService(
      * ```
      */
     override fun predictByLabels(labels: String): PredictionResult {
-        val fakeJson = """
+        cache.getCachedDetails(labels)?.let {
+            val json = objectMapper.readValue(it, PredictionResult::class.java)
+            return json.also { resp ->
+                log(
+                    message = "Cache Hit -> $resp"
+                )
+            }
+        } ?: run {
+            val fakeJson = """
             {
               "name": "Cofsils Cough Syrup",
               "description": "Cofsils cough syrup is a medication used to relieve cough symptoms. It may contain ingredients to suppress cough, thin mucus, or soothe the throat. Consult a doctor or pharmacist for potential allergies and precautions.",
@@ -110,7 +123,26 @@ internal class FakeMedicinePredictorService(
               "dosages": "Adults: 10-15 ml three to four times a day. Children (6-12 years): 5-10 ml three to four times a day. Children (2-6 years): 2.5-5 ml three to four times a day. Consult a doctor for children under 2 years."
             }
         """.trimIndent()
-        val json = objectMapper.readValue(fakeJson, PredictionResult::class.java)
-        return json
+            val json = objectMapper.readValue(fakeJson, PredictionResult::class.java)
+            cache.cacheDetails(
+                labels = labels,
+                detailsJson = fakeJson
+            )
+            return json.also {
+                log(
+                    message = "Cache Miss -> $it"
+                )
+            }
+        }
+    }
+
+    private fun log(message: String,status: Log.Status = Log.Status.INFO){
+        logger.log(
+            log = Log(
+                message = message,
+                tag = this::class.simpleName.toString(),
+                status = status
+            )
+        )
     }
 }

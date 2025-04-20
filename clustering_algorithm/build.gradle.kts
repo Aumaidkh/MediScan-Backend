@@ -26,6 +26,7 @@ dependencies {
 
     implementation(project(":medicine_management"))
     implementation(project(":logging"))
+    implementation(project(":cache"))
 }
 
 tasks.test {
