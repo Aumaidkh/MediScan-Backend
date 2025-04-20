@@ -31,6 +31,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
 
     implementation(project(":clustering_algorithm"))
+    implementation(project(":cache"))
+    implementation(project(":logging"))
 }
 
 tasks.test {

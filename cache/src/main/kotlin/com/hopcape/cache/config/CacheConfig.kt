@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 
 @Configuration
-@EnableMongoRepositories(basePackages = ["com.hopcape.cache.predictions.repository"])
+@EnableMongoRepositories(basePackages = ["com.hopcape.cache.predictions.repository","com.hopcape.cache.recognition.repository"])
 class CacheConfig

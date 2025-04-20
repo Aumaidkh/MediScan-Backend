@@ -1,6 +1,9 @@
 package com.hopcape.image.recogntion.fake
 
+import com.hopcape.cache.api.Cache
 import com.hopcape.image.recogntion.api.ImageRecognitionService
+import com.hopcape.logging.api.Log
+import com.hopcape.logging.api.Logger
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 
@@ -65,7 +68,9 @@ internal class FakeRecognitionService(
      * A predefined string containing fake labels or text to be returned by the `recognizeImage` method.
      * Default value is `"Cipla Paracetamol Tablets IP PARACIP-500 रासप 10,Cipla,Paracetamol,Tablets,PARACIP,500,रासप"`.
      */
-    private val output: String = "Cipla Paracetamol Tablets IP PARACIP-500 रासप 10,Cipla,Paracetamol,Tablets,PARACIP,500,रासप"
+    private val output: String = "Cipla Paracetamol Tablets IP PARACIP-500 रासप 10,Cipla,Paracetamol,Tablets,PARACIP,500,रासप",
+    private val logger: Logger,
+    private val cache: Cache
 ) : ImageRecognitionService {
 
     /**
@@ -90,6 +95,18 @@ internal class FakeRecognitionService(
      * ```
      */
     override fun recognizeImage(imageBytes: ByteArray): String {
-        return output
+        cache.getCachedLabels(imageBytes)?.let {
+            return it.also {
+                logger.log(Log(tag = this::class.java.name,message = "Cache Hit: $it"))
+            }
+        } ?: run {
+            cache.cacheLabels(
+                labels = output,
+                bytes = imageBytes
+            ).also {
+                logger.log(Log(tag = this::class.java.name,message = "Cache Miss: $it"))
+            }
+            return output
+        }
     }
 }
