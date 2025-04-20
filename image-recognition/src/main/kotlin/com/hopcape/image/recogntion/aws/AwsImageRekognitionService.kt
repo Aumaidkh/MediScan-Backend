@@ -1,6 +1,8 @@
-package com.hopcape.image.recogntion
+package com.hopcape.image.recogntion.aws
 
-import com.hopcape.clustering.MedicineIdentifier
+import com.hopcape.clustering.api.MedicineDetailsPredictor
+import com.hopcape.image.recogntion.api.ImageRecognitionService
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 import software.amazon.awssdk.core.SdkBytes
 import software.amazon.awssdk.services.rekognition.RekognitionClient
@@ -9,6 +11,7 @@ import software.amazon.awssdk.services.rekognition.model.Image
 import software.amazon.awssdk.services.rekognition.model.TextDetection
 import software.amazon.awssdk.services.rekognition.model.TextTypes
 
+const val AWS_REKOGNITION = "AwsImageRekognitionService"
 /**
  * Service implementation for image recognition using AWS Rekognition.
  *
@@ -18,10 +21,11 @@ import software.amazon.awssdk.services.rekognition.model.TextTypes
  *
  * @property client An instance of RekognitionClient to communicate with AWS Rekognition.
  */
-//@Service
-class AwsImageRekognitionService(
+@Service
+@Qualifier(AWS_REKOGNITION)
+internal class AwsImageRekognitionService(
     private val client: RekognitionClient,
-    private val identifier: MedicineIdentifier
+    private val predictor: MedicineDetailsPredictor
 ) : ImageRecognitionService {
     /**
      * Recognizes and extracts text from the given image using AWS Rekognition.
@@ -46,7 +50,7 @@ class AwsImageRekognitionService(
         val detectedTexts = detectTextResult.textDetections()
         val labels = extractTop5ConfidentLabels(detectedTexts)
         // Extract and return the recognized text
-        return identifier.identify(labels) ?: "Unknown Medicine"
+        return predictor.predictByLabels(labels.joinToString(",")).name ?: "Unknown Medicine"
     }
 
     fun extractTop5ConfidentLabels(detectedTexts: List<TextDetection>): List<String> {

@@ -1,20 +1,19 @@
 package com.mediscan.ai.domain.medicine
 
-import com.hopcape.clustering.nlp.MedicineDetailsPredictor
-import com.hopcape.image.recogntion.GOOGLE_CLOUD_VISION
-import com.hopcape.image.recogntion.ImageRecognitionService
+import com.hopcape.clustering.api.MedicineDetailsPredictor
+import com.hopcape.image.recogntion.fake.FAKE_RECOGNITION_SERVICE
+import com.hopcape.image.recogntion.api.ImageRecognitionService
 import com.mediscan.ai.domain.RequestHandler
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 
 typealias UploadMedicineRequestHandler = RequestHandler<UploadMedicineRequest, UploadMedicineResponse>
 
 @Service
 internal class UploadMedicineRequestHandlerImpl(
-    @Qualifier(GOOGLE_CLOUD_VISION)
+    @Qualifier(FAKE_RECOGNITION_SERVICE)
     private val recognitionService: ImageRecognitionService,
-    @Qualifier("GeminiMedicineDetailsPredictor")
+    @Qualifier(FAKE_RECOGNITION_SERVICE)
     private val predictor: MedicineDetailsPredictor
 ): UploadMedicineRequestHandler {
 
