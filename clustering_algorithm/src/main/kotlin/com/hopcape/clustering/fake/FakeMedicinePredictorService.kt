@@ -107,7 +107,7 @@ internal class FakeMedicinePredictorService(
      * ```
      */
     override fun predictByLabels(labels: String): PredictionResult {
-        cache.getCachedDetails(labels)?.let {
+        cache.get(labels)?.let {
             val json = objectMapper.readValue(it, PredictionResult::class.java)
             return json.also { resp ->
                 log(
@@ -124,9 +124,9 @@ internal class FakeMedicinePredictorService(
             }
         """.trimIndent()
             val json = objectMapper.readValue(fakeJson, PredictionResult::class.java)
-            cache.cacheDetails(
-                labels = labels,
-                detailsJson = fakeJson
+            cache.update(
+                key = labels,
+                data = fakeJson
             )
             return json.also {
                 log(

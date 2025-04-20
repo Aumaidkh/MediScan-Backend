@@ -2,6 +2,7 @@ package com.hopcape.image.recogntion.fake
 
 import com.hopcape.cache.api.Cache
 import com.hopcape.image.recogntion.api.ImageRecognitionService
+import com.hopcape.image.recogntion.utils.generateHashForImage
 import com.hopcape.logging.api.Log
 import com.hopcape.logging.api.Logger
 import org.springframework.beans.factory.annotation.Qualifier
@@ -95,14 +96,15 @@ internal class FakeRecognitionService(
      * ```
      */
     override fun recognizeImage(imageBytes: ByteArray): String {
-        cache.getCachedLabels(imageBytes)?.let {
+        val cacheKey = generateHashForImage(imageBytes)
+        cache.get(cacheKey)?.let {
             return it.also {
                 logger.log(Log(tag = this::class.java.name,message = "Cache Hit: $it"))
             }
         } ?: run {
-            cache.cacheLabels(
-                labels = output,
-                bytes = imageBytes
+            cache.update(
+                key = cacheKey,
+                data = output
             ).also {
                 logger.log(Log(tag = this::class.java.name,message = "Cache Miss: $it"))
             }
