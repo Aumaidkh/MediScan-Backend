@@ -5,6 +5,7 @@ import com.hopcape.clustering.api.MedicineDetailsPredictor
 import com.hopcape.clustering.api.PredictionResult
 import com.hopcape.logging.api.Log
 import com.hopcape.logging.api.Logger
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpEntity
 import org.springframework.stereotype.Service
@@ -12,7 +13,10 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.web.client.RestTemplate
 
+const val QWEN_PREDICTOR = "OpenRouterApiMedicineDetailsPredictor"
+
 @Service
+@Qualifier(QWEN_PREDICTOR)
 @Deprecated(
     message = "Doesn't return the dosage in the intended format",
     replaceWith = ReplaceWith(

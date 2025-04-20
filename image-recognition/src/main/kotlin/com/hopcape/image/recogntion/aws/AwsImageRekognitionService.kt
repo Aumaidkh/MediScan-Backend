@@ -1,6 +1,8 @@
 package com.hopcape.image.recogntion.aws
 
 import com.hopcape.clustering.api.MedicineDetailsPredictor
+import com.hopcape.clustering.fake.FAKE_PREDICTOR
+import com.hopcape.clustering.qwen.QWEN_PREDICTOR
 import com.hopcape.image.recogntion.api.ImageRecognitionService
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
@@ -25,6 +27,7 @@ const val AWS_REKOGNITION = "AwsImageRekognitionService"
 @Qualifier(AWS_REKOGNITION)
 internal class AwsImageRekognitionService(
     private val client: RekognitionClient,
+    @Qualifier(QWEN_PREDICTOR)
     private val predictor: MedicineDetailsPredictor
 ) : ImageRecognitionService {
     /**

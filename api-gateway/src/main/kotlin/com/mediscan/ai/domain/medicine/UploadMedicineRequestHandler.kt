@@ -1,6 +1,7 @@
 package com.mediscan.ai.domain.medicine
 
 import com.hopcape.clustering.api.MedicineDetailsPredictor
+import com.hopcape.clustering.fake.FAKE_PREDICTOR
 import com.hopcape.image.recogntion.fake.FAKE_RECOGNITION_SERVICE
 import com.hopcape.image.recogntion.api.ImageRecognitionService
 import com.mediscan.ai.domain.RequestHandler
@@ -13,7 +14,7 @@ typealias UploadMedicineRequestHandler = RequestHandler<UploadMedicineRequest, U
 internal class UploadMedicineRequestHandlerImpl(
     @Qualifier(FAKE_RECOGNITION_SERVICE)
     private val recognitionService: ImageRecognitionService,
-    @Qualifier(FAKE_RECOGNITION_SERVICE)
+    @Qualifier(FAKE_PREDICTOR)
     private val predictor: MedicineDetailsPredictor
 ): UploadMedicineRequestHandler {
 
