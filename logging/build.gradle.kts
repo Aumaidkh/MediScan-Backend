@@ -5,16 +5,15 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
 }
 
-group = "com.hopcape.logging"
-version = "unspecified"
+group = "${ProjectConfig.GROUP_NAME_PREFIX}.logging"
+version = ProjectConfig.VERSION_NAME
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
-    implementation("org.springframework.boot:spring-boot-starter-security")
+    spring()
 }
 
 tasks.test {

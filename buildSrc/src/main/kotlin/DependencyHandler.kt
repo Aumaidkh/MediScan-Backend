@@ -73,8 +73,13 @@ fun DependencyHandlerScope.aws(){
     implementation("software.amazon.awssdk:rekognition")
 }
 
+fun DependencyHandlerScope.jwt(){
+    compileOnly("jakarta.servlet:jakarta.servlet-api:6.1.0")
 
-
+    implementation("io.jsonwebtoken:jjwt-api:0.12.6")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
+}
 
 /**
  * Adds an implementation dependency to the project.
@@ -96,4 +101,13 @@ private fun DependencyHandlerScope.implementationProject(dependencyNotation: Str
 
 private fun DependencyHandlerScope.implementPlatform(platformNotation: String) {
     add("implementation",platform(platformNotation))
+}
+
+
+private fun DependencyHandlerScope.compileOnly(dependencyNotation: String){
+    add("compileOnly",dependencyNotation)
+}
+
+private fun DependencyHandlerScope.runtimeOnly(dependencyNotation: String){
+    add("runtimeOnly",dependencyNotation)
 }

@@ -5,8 +5,8 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
 }
 
-group = "com.hopcape.security"
-version = "1.0.0-ALPHA01"
+group = "${ProjectConfig.GROUP_NAME_PREFIX}.security"
+version = ProjectConfig.VERSION_NAME
 
 
 repositories {
@@ -14,15 +14,10 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
-    implementation("org.springframework.boot:spring-boot-starter-security")
-
-    compileOnly("jakarta.servlet:jakarta.servlet-api:6.1.0")
-
-    implementation("io.jsonwebtoken:jjwt-api:0.12.6")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
-    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
-    implementation(project(":common"))
+    spring()
+    springSecurity()
+    jwt()
+    addCommon()
 }
 
 tasks.test {

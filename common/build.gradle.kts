@@ -2,15 +2,11 @@ plugins {
     kotlin("jvm") version "2.1.10"
 }
 
-group = "com.hopcape.common"
-version = "unspecified"
+group = "${ProjectConfig.GROUP_NAME_PREFIX}.common"
+version = ProjectConfig.VERSION_NAME
 
 repositories {
     mavenCentral()
-}
-
-dependencies {
-    testImplementation(kotlin("test"))
 }
 
 tasks.test {
