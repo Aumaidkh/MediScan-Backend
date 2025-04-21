@@ -63,6 +63,17 @@ fun DependencyHandlerScope.mongodb(){
 }
 
 
+fun DependencyHandlerScope.cloudVision(){
+    implementation("com.google.cloud:google-cloud-vision:3.17.0")
+}
+
+
+fun DependencyHandlerScope.aws(){
+    implementPlatform("software.amazon.awssdk:bom:2.20.0")
+    implementation("software.amazon.awssdk:rekognition")
+}
+
+
 
 
 /**
@@ -80,4 +91,9 @@ private fun DependencyHandlerScope.kotlinTestImplementation(dependencyNotation: 
 
 private fun DependencyHandlerScope.implementationProject(dependencyNotation: String) {
     add("implementation",project(dependencyNotation))
+}
+
+
+private fun DependencyHandlerScope.implementPlatform(platformNotation: String) {
+    add("implementation",platform(platformNotation))
 }

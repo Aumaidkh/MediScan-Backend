@@ -6,7 +6,7 @@ plugins {
 
 }
 
-group = "com.hopcape.clustering"
+group = "${ProjectConfig.GROUP_NAME_PREFIX}.clustering"
 version = ProjectConfig.VERSION_NAME
 
 repositories {
