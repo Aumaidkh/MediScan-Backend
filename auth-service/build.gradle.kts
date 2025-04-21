@@ -6,23 +6,16 @@ plugins {
 }
 
 group = "com.hopcape.auth"
-version = "1.0.0-APLHA01"
+version = ProjectConfig.VERSION_NAME
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
-    implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
-
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
-
-    implementation(project(":security"))
+    spring()
+    mongodb()
+    addSecurity()
 }
 
 tasks.test {
