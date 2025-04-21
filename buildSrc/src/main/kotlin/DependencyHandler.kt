@@ -20,7 +20,7 @@ fun DependencyHandlerScope.addImageRecognition() {
 
 
 fun DependencyHandlerScope.addNlp() {
-    implementationProject(":clustering_algorithm")
+    implementationProject(":nlp")
 }
 
 

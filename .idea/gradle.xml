@@ -4,17 +4,29 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/buildSrc" name="buildSrc">
+                <projects>
+                  <project path="$PROJECT_DIR$/buildSrc" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/api-gateway" />
             <option value="$PROJECT_DIR$/auth-service" />
-            <option value="$PROJECT_DIR$/clustering_algorithm" />
+            <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/cache" />
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/image-recognition" />
             <option value="$PROJECT_DIR$/logging" />
-            <option value="$PROJECT_DIR$/medicine_management" />
+            <option value="$PROJECT_DIR$/nlp" />
             <option value="$PROJECT_DIR$/security" />
           </set>
         </option>
