@@ -6,30 +6,24 @@ plugins {
 }
 
 group = "com.mediscan.ai"
-version = "1.0.0-APLHA01"
+version = ProjectConfig.VERSION_NAME
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
-    implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    spring()
+    springSecurity()
+    springValidation()
+    swaggerDocs()
+    addLogger()
+    addNlp()
+    addImageRecognition()
+    addAuth()
+    addCommon()
+    addSecurity()
 
-    implementation("org.springframework.boot:spring-boot-starter-validation")
-
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
-
-    implementation(project(":security"))
-    implementation(project(":common"))
-    implementation(project(":auth-service"))
-    implementation(project(":image-recognition"))
-    implementation(project(":medicine_management"))
-    implementation(project(":clustering_algorithm"))
-    implementation(project(":logging"))
 }
 
 tasks.test {
