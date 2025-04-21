@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
     spring()
+    springSecurity()
     mongodb()
     addSecurity()
 }
